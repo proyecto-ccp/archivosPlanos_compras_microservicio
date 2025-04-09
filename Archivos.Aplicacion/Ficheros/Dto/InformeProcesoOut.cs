@@ -1,8 +1,10 @@
 ﻿
 using Archivos.Aplicacion.Comun;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Archivos.Aplicacion.Ficheros.Dto
 {
+    [ExcludeFromCodeCoverage]
     public class InformeProcesoOut : BaseOut
     {
         public int TotalRegistros { get; set; }

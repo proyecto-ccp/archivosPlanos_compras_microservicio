@@ -1,6 +1,9 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+
 namespace Archivos.Dominio.Entidades
 {
+    [ExcludeFromCodeCoverage]
     public class InformeProceso
     {
         public int TotalRegistros { get; set; }
