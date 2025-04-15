@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivos.Aplicacion", "Arch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivos.Infraestructura", "Archivos.Infraestructura\Archivos.Infraestructura.csproj", "{B2060713-636C-49E8-8553-400C51F501A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivos.Tets", "Archivos.Tets\Archivos.Tets.csproj", "{6D1D1ECB-7225-48F9-8BFD-9FB663832639}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,9 +36,16 @@ Global
 		{B2060713-636C-49E8-8553-400C51F501A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2060713-636C-49E8-8553-400C51F501A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2060713-636C-49E8-8553-400C51F501A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D1D1ECB-7225-48F9-8BFD-9FB663832639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1D1ECB-7225-48F9-8BFD-9FB663832639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1D1ECB-7225-48F9-8BFD-9FB663832639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D1D1ECB-7225-48F9-8BFD-9FB663832639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D1D1ECB-7225-48F9-8BFD-9FB663832639} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E356C0D3-E8D6-442F-AC07-1ECB1037A80D}

@@ -5,7 +5,6 @@ using Archivos.Dominio.Entidades;
 using Archivos.Dominio.Servicios.Archivos;
 using AutoMapper;
 using MediatR;
-using System.Linq;
 using System.Net;
 
 namespace Archivos.Aplicacion.Ficheros.Comandos

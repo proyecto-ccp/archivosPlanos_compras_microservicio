@@ -1,7 +1,10 @@
 ﻿
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Archivos.Dominio.Entidades
 {
+    [ExcludeFromCodeCoverage]
     public class RegistroCsv
     {
         public string Nombre { get; set; }
