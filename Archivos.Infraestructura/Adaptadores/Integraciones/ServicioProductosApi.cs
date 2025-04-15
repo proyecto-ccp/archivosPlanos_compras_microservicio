@@ -2,10 +2,12 @@
 using Archivos.Dominio.ObjetoValor;
 using Archivos.Dominio.Puertos.Integraciones;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Json;
 
 namespace Archivos.Infraestructura.Adaptadores.Integraciones
 {
+    [ExcludeFromCodeCoverage]
     public class ServicioProductosApi : IServicioProductosApi
     {
         private readonly HttpClient _httpClient;

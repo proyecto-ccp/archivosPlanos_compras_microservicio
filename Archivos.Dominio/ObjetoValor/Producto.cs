@@ -1,6 +1,9 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+
 namespace Archivos.Dominio.ObjetoValor
 {
+    [ExcludeFromCodeCoverage]
     public class Producto
     {
         public string Nombre { get; set; }
