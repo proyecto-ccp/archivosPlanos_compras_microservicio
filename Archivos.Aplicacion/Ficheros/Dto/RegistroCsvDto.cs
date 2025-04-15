@@ -1,6 +1,9 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
+
 namespace Ficheros.Aplicacion.Archivos.Dto
 {
+    [ExcludeFromCodeCoverage]
     public class RegistroCsvDto
     {
         public string Nombre { get; set; }
