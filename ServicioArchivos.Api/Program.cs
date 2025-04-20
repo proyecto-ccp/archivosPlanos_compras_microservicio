@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Version = "V.1.0.1",
+        Version = "V.1.1.1",
         Title = "Servicio Archivos Planos",
         Description = "Cargue de planos para el modulo de compras"
     });
