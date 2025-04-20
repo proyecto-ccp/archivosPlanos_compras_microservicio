@@ -19,5 +19,6 @@ namespace Archivos.Dominio.Entidades
         public int IdMaterial { get; set; }
         public string UrlFoto1 { get; set; }
         public string UrlFoto2 { get; set; }
+        public int Cantidad { get; set; }
     }
 }

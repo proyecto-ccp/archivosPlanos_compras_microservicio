@@ -34,7 +34,8 @@ namespace Archivos.Dominio.Servicios.Archivos
                     IdModelo = registro.IdModelo,
                     IdMaterial = registro.IdMaterial,
                     UrlFoto1 = registro.UrlFoto1,
-                    UrlFoto2 = registro.UrlFoto2
+                    UrlFoto2 = registro.UrlFoto2,
+                    Cantidad = registro.Cantidad
                 };
 
                 var resultadoOperacion = await _servicioProductosApi.CrearProducto(producto);
