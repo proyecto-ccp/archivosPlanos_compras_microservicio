@@ -33,8 +33,8 @@ namespace ServicioArchivos.Api.Controllers
         [Route("EnviarPlanoCsv")]
         [ProducesResponseType(typeof(InformeProcesoOut), 201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ValidationProblemDetails), 401)]
-        [ProducesResponseType(typeof(ValidationProblemDetails), 500)]
+        [ProducesResponseType(typeof(ProblemDetails), 401)]
+        [ProducesResponseType(typeof(ProblemDetails), 500)]
         public async Task<IActionResult> EnviarPlanoCsv([FromForm] ArchivoComando plano)
         {
             var output = await _mediator.Send(plano);
