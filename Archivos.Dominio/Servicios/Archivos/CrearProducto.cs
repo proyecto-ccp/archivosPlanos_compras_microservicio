@@ -10,7 +10,7 @@ namespace Archivos.Dominio.Servicios.Archivos
     {
         private readonly IServicioProductosApi _servicioProductosApi = servicioProductosApi;
         
-        public async Task<InformeProceso> Ejecutar(List<RegistroCsv> registros)
+        public async Task<InformeProceso> Ejecutar(List<RegistroCsv> registros, string token)
         {
             var informe = new InformeProceso
             {
@@ -38,7 +38,7 @@ namespace Archivos.Dominio.Servicios.Archivos
                     Cantidad = registro.Cantidad
                 };
 
-                var resultadoOperacion = await _servicioProductosApi.CrearProducto(producto);
+                var resultadoOperacion = await _servicioProductosApi.CrearProducto(producto, token);
                 
                 if (resultadoOperacion.Resultado == 1)
                 {
