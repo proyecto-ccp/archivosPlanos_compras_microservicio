@@ -2,6 +2,8 @@ using Archivos.Dominio.Puertos.Integraciones;
 using Archivos.Dominio.Servicios.Archivos;
 using Archivos.Infraestructura.Adaptadores.Integraciones;
 using Microsoft.OpenApi.Models;
+using Productos.Infraestructura.Adaptadores.Integraciones;
+using ServicioArchivos.Api.Middleware;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +61,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Capa Infraestructura
 builder.Services.AddScoped<IArchivoPlano, ArchivoPlano>();
 builder.Services.AddHttpClient<IServicioProductosApi, ServicioProductosApi>();
+builder.Services.AddHttpClient<IServicioUsuariosApi, ServicioUsuariosApi>();
+builder.Services.AddHttpClient<IServicioAuditoriaApi, ServicioAuditoriaApi>();
 //Capa Dominio - Servicios
 builder.Services.AddTransient<LeerArchivo>();
 builder.Services.AddTransient<CrearProducto>();
@@ -70,6 +74,7 @@ app.UseSwaggerUI();
 
 app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
+app.UseMiddleware<AutorizadorMiddleware>();
 app.UseRouting();
 app.MapControllers();
 

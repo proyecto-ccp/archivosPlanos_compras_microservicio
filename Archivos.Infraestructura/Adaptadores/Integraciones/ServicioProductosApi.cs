@@ -3,6 +3,8 @@ using Archivos.Dominio.ObjetoValor;
 using Archivos.Dominio.Puertos.Integraciones;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace Archivos.Infraestructura.Adaptadores.Integraciones
@@ -18,8 +20,9 @@ namespace Archivos.Infraestructura.Adaptadores.Integraciones
             string _baseUrl = configuration["ServicioProductos:UrlBase"] ?? throw new InvalidOperationException("ServicioProductos:UrlBase no ha sido configurada");
             _httpClient.BaseAddress = new Uri(_baseUrl);
         }
-        public async Task<OperacionInfo> CrearProducto(Producto producto)
+        public async Task<OperacionInfo> CrearProducto(Producto producto, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var respuesta = await _httpClient.PostAsJsonAsync("api/Productos/Crear", producto);
             respuesta.EnsureSuccessStatusCode();
 
