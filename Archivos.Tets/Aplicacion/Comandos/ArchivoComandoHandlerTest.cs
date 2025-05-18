@@ -2,6 +2,7 @@
 using Archivos.Aplicacion.Comun;
 using Archivos.Aplicacion.Ficheros.Comandos;
 using Archivos.Aplicacion.Ficheros.Dto;
+using Archivos.Aplicacion.Ficheros.Mapeadores;
 using Archivos.Dominio.Entidades;
 using Archivos.Dominio.ObjetoValor;
 using Archivos.Dominio.Puertos.Integraciones;
@@ -21,19 +22,27 @@ namespace Archivos.Tets.Aplicacion.Comandos
         private readonly IMapper _mapper;
         private readonly Mock<IArchivoPlano> mockIArchivo;
         private readonly Mock<IServicioProductosApi> mockServicioProductosApi;
+        private readonly Mock<IServicioAuditoriaApi> mockServicioAuditoriaApi;
+        private readonly BaseIn _baseIn;
 
         public ArchivoComandoHandlerTest()
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<RegistroCsv, Producto>();
-                cfg.CreateMap<InformeProceso, InformeProcesoOut>();
+                cfg.AddProfile(new InformeProcesoMapeador());
+                cfg.AddProfile(new RegistroCsvMapeador());
             });
             _mapper = config.CreateMapper();
             mockIArchivo = new Mock<IArchivoPlano>();
             mockServicioProductosApi = new Mock<IServicioProductosApi>();
             _leerArchivo = new LeerArchivo(mockIArchivo.Object);
             _crearProducto = new CrearProducto(mockServicioProductosApi.Object);
+            mockServicioAuditoriaApi = new Mock<IServicioAuditoriaApi>();
+            _baseIn = new BaseIn
+            {
+                Token = "tokenPruebasUnitarias",
+                IdUsuario = Guid.NewGuid().ToString(),
+            };
         }
 
         /// <summary>
@@ -54,14 +63,15 @@ namespace Archivos.Tets.Aplicacion.Comandos
             fileMock.Setup(_ => _.OpenReadStream()).Returns(memoryStream);
             fileMock.Setup(_ => _.FileName).Returns(fileName);
             fileMock.Setup(_ => _.Length).Returns(memoryStream.Length);
-            
-            var archivoComando = new ArchivoComando(fileMock.Object);
+
+
+            var archivoComando = new ArchivoComando(fileMock.Object, _baseIn);
 
             mockIArchivo.Setup(x => x.LeerArchivoCsv<RegistroCsv>(It.IsAny<Stream>(), It.IsAny<char>())).Returns(registros);
 
-            mockServicioProductosApi.Setup(x => x.CrearProducto(It.IsAny<Producto>())).ReturnsAsync(resServicio);
+            mockServicioProductosApi.Setup(x => x.CrearProducto(It.IsAny<Producto>(), It.IsAny<string>())).ReturnsAsync(resServicio);
 
-            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto);
+            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto, mockServicioAuditoriaApi.Object);
 
             var resultado = await objPrueba.Handle(archivoComando, CancellationToken.None);
 
@@ -79,11 +89,11 @@ namespace Archivos.Tets.Aplicacion.Comandos
         {
             var fileMock = new Mock<IFormFile>();
 
-            var archivoComando = new ArchivoComando(fileMock.Object);
+            var archivoComando = new ArchivoComando(fileMock.Object, _baseIn);
 
             mockIArchivo.Setup(x => x.LeerArchivoCsv<RegistroCsv>(It.IsAny<Stream>(), It.IsAny<char>())).Returns([]);
 
-            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto);
+            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto, mockServicioAuditoriaApi.Object);
 
             var resultado = await objPrueba.Handle(archivoComando, CancellationToken.None);
 
@@ -108,11 +118,11 @@ namespace Archivos.Tets.Aplicacion.Comandos
             fileMock.Setup(_ => _.FileName).Returns(fileName);
             fileMock.Setup(_ => _.Length).Returns(memoryStream.Length);
 
-            var archivoComando = new ArchivoComando(fileMock.Object);
+            var archivoComando = new ArchivoComando(fileMock.Object, _baseIn);
 
             mockIArchivo.Setup(x => x.LeerArchivoCsv<RegistroCsv>(It.IsAny<Stream>(), It.IsAny<char>())).Returns([]);
 
-            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto);
+            var objPrueba = new ArchivoComandoHandler(_mapper, _leerArchivo, _crearProducto, mockServicioAuditoriaApi.Object);
 
             var resultado = await objPrueba.Handle(archivoComando, CancellationToken.None);
 

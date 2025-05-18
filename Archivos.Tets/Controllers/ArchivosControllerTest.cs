@@ -15,7 +15,7 @@ namespace Archivos.Tets.Controllers
     {
         private readonly Mock<IMediator> mockMediator;
 
-        public ArchivosControllerTest() 
+        public ArchivosControllerTest()
         {
             mockMediator = new Mock<IMediator>();
         }
@@ -23,7 +23,7 @@ namespace Archivos.Tets.Controllers
         [Theory]
         [InlineData(Resultado.Exitoso, HttpStatusCode.OK)]
         [InlineData(Resultado.Error, HttpStatusCode.InternalServerError)]
-        public async Task EnviarPlanoCsv_Respuestas(Resultado enumRes, HttpStatusCode status) 
+        public async Task EnviarPlanoCsv_Respuestas(Resultado enumRes, HttpStatusCode status)
         {
             var output = new InformeProcesoOut
             {
@@ -35,9 +35,22 @@ namespace Archivos.Tets.Controllers
                 .ReturnsAsync(output);
 
             var objPrueba = new ArchivosController(mockMediator.Object);
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Authorization = "Bearer pruebas-token-123";
+            httpContext.Items["UserId"] = Guid.NewGuid().ToString();
+            objPrueba.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+
+            var baseIn = new BaseIn
+            {
+                Token = "tokenPruebasUnitarias",
+                IdUsuario = Guid.NewGuid().ToString(),
+            };
 
             var file = new Mock<IFormFile>();
-            var request = new ArchivoComando(file.Object);
+            var request = new ArchivoComando(file.Object, baseIn);
 
             var resultado = await objPrueba.EnviarPlanoCsv(request);
 
